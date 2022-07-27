@@ -1,9 +1,12 @@
 
-import jwt_decode from "jwt-decode";
+const jwt = require("jsonwebtoken")
+const config = require("../configs")
+
+// 也可使用公钥私钥来验证
 
 function auth(socket, next) {
     try {
-        jwt_decode(socket.handshake.auth.token)
+        jwt.verify(socket.handshake.query.token, config.jwt_secret)
         next();
     } catch (error) {
         next(new Error("invalid auth token"));
