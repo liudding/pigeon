@@ -1,0 +1,22 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@socket.io/admin-ui": "^0.4.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jwt-decode": "^3.1.2",
+    "rate-limiter-flexible": "^2.3.7",
+    "socket.io": "^4.5.1",
+    "winston": "^3.8.1",
+    "winston-daily-rotate-file": "^4.7.1"
+  }
+}
