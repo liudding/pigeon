@@ -22,7 +22,7 @@ const sysEvents = require("./sys_events");
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-    // path: 'ss',
+    // path: '/',
     cors: {
         origin: ['localhost', '127.0.0.1', 'https://admin.socket.io'],
         methods: ["GET", "POST"],
