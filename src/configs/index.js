@@ -8,7 +8,7 @@ module.exports = {
     debugMode: process.env.DEBUG_MODE === 'true',
 
     appName: 'chaosocket',
-    sysEventPrefix: 'chaosocket:',
+    sysEventPrefix: '',
 
     jwt_secret: '',
 

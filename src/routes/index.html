@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    </head>
+    <body>
+
+        <div style="display: flex;">
+            <div>
+                Client A
+                <div>
+
+                </div>
+            </div>
+            <div>Client B</div>
+        </div>
+        <script>
+            let socketA = new io('ws://localhost:3301')
+            socketA.on('join_succeeded', function (data) {
+                console.log('A: join_succeeded', data)
+            })
+            socketA.on('member_joined', function (data) {
+                console.log('A: member_joined', data)
+            })
+
+            // socketA.onAny((event, ...args) => {
+            //     console.log('[any]', event, args);
+            //     });
+
+            let socketB = new io('ws://localhost:3301')
+            socketB.on('join_succeeded', function (data) {
+                console.log('B: join_succeeded', data)
+            })
+            socketB.on('member_joined', function (data) {
+                console.log('B: member_joined', data)
+            })
+
+
+           
+            socketB.emit('public-as223xss1/join', {})
+            socketA.emit('presence-xase3weew/join', {id: 123, name: 'jack'})
+            socketB.emit('presence-xase3weew/join', {id: 445, name: 'pony'})
+
+        </script>
+    </body>
+</html>

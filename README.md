@@ -5,6 +5,18 @@
 
 本项目仅作为 WebSocket 的代理 broker，负责转发客户端与客户端、客户端与服务端之间的事件消息，不参与业务。
 
+### Channels
+
+* public channels
+* private channels
+* presence channels
+
+
+<channel>:join, name
+<channel>:leave, name
+<channel>:xxx, {}
+
+
 
 ### 事件
 事件分为系统事件和普通事件，

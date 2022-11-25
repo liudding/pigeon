@@ -16,7 +16,7 @@ const app = express();
 const httpServer = createServer(app);
 httpServer.listen(config.httpPort);
 
-const { initWebSocket } = require("./websocket");
+const { initWebSocket } = require("./echo/websocket");
 initWebSocket(httpServer);
 
 const routes = require("./routes");

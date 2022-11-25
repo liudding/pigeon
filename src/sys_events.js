@@ -1,6 +1,5 @@
 const config = require('./configs');
 
-
 const handlers = {}
 
 
@@ -11,8 +10,8 @@ function on(event, handler) {
 
 
 function isSystemEvent(event) {
-    for (const key in sysEvents) {
-        if (sysEvents[key] === event) {
+    for (const key in events) {
+        if (events[key] === event) {
             return true;
         }
     }
@@ -24,12 +23,13 @@ function isSystemEvent(event) {
 const events = {
     ERROR: config.sysEventPrefix + 'error',
 
-    JOIN_ROOM: config.sysEventPrefix + 'join_room',
-    JOIN_ROOM_SUCCEEDED: config.sysEventPrefix + 'join_room_succeeded',
-    CLIENT_JOINED_ROOM: config.sysEventPrefix + 'client_joined_room',
+    LOGIN_SUCCUSS: config.sysEventPrefix + 'login_success',
 
-    JOIN_CHANNEL: config.sysEventPrefix + 'join_channel',
-    JOIN_CHANNEL_SUCCEEDED: config.sysEventPrefix + 'join_channel_succeeded',
+    JOIN_SUCCUSS: config.sysEventPrefix + 'join_succeess',
+    JOIN_ERROR: config.sysEventPrefix + 'join_error',
+    
+    MEMBER_JOINED: config.sysEventPrefix + 'member_joined',
 }
+
 
 module.exports = { events, isSystemEvent }
