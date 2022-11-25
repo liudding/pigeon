@@ -30,6 +30,14 @@
 * 指定对象
 
 
+### Webhooks
+
+```json
+{
+  "time_ms": 1327078148132,
+  "events": [{ "name": "event_name", "some": "data" }]
+}
+```
 
 ## Admin UI
 

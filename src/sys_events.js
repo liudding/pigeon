@@ -10,8 +10,18 @@ function on(event, handler) {
 }
 
 
+function isSystemEvent(event) {
+    for (const key in sysEvents) {
+        if (sysEvents[key] === event) {
+            return true;
+        }
+    }
 
-module.exports = {
+    return false;
+}
+
+
+const events = {
     ERROR: config.sysEventPrefix + 'error',
 
     JOIN_ROOM: config.sysEventPrefix + 'join_room',
@@ -21,3 +31,5 @@ module.exports = {
     JOIN_CHANNEL: config.sysEventPrefix + 'join_channel',
     JOIN_CHANNEL_SUCCEEDED: config.sysEventPrefix + 'join_channel_succeeded',
 }
+
+module.exports = { events, isSystemEvent }

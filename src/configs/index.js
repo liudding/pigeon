@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
     env: process.env.NODE_ENV || 'local',
 
-    port: Number(process.env.PORT) || 3301,
-    adminPort: Number(process.env.ADMIN_PORT) || 3302,
+    websocketPort: Number(process.env.PORT) || 3301,
+    httpPort: Number(process.env.ADMIN_PORT) || 3302,
     debugMode: process.env.DEBUG_MODE === 'true',
 
     appName: 'chaosocket',
