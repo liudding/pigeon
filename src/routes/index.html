@@ -15,7 +15,9 @@
             <div>Client B</div>
         </div>
         <script>
-            let socketA = new io('ws://localhost:3301')
+            let socketA = new io('ws://localhost:3301', {
+                query: {appid: 'xxxyyy'}
+            })
             socketA.on('join_succeeded', function (data) {
                 console.log('A: join_succeeded', data)
             })
@@ -23,24 +25,37 @@
                 console.log('A: member_joined', data)
             })
 
-            // socketA.onAny((event, ...args) => {
-            //     console.log('[any]', event, args);
-            //     });
+            socketA.onAny((event, ...args) => {
+                console.log('[any]', event, args);
+                });
 
-            let socketB = new io('ws://localhost:3301')
+            let socketB = new io('ws://localhost:3301', { query: {appid: 'xxxyyy'} })
             socketB.on('join_succeeded', function (data) {
                 console.log('B: join_succeeded', data)
             })
             socketB.on('member_joined', function (data) {
                 console.log('B: member_joined', data)
-            })
+            }) 
+            socketB.on('member_left', function (data) {
+                console.log('B: member_left', data)
+            }) 
+            socketB.onAny((event, ...args) => {
+                console.log('[any]', event, args);
+                });
 
 
            
-            socketB.emit('public-as223xss1/join', {})
+            socketB.emit('public-as223xss1/join', { id: 445, name: 'pony'})
             socketA.emit('presence-xase3weew/join', {id: 123, name: 'jack'})
-            socketB.emit('presence-xase3weew/join', {id: 445, name: 'pony'})
+           
+            setTimeout(() => {
+                socketB.emit('presence-xase3weew/join', {id: 445, name: 'pony'})
+            
+            }, 20)
 
+            setTimeout(() => {
+                socketA.disconnect();
+            }, 3000)
         </script>
     </body>
 </html>

@@ -1,26 +1,35 @@
-const { rooms } = require('../store')
+const { channels, users } = require('../store')
 const { events } = require('../sys_events')
 
-function join({socket, channel, message}) {
-    const room = channel
-    socket.join(room);
-    roomId = room;
+async function join({socket, channel, message, user}) {
+    const channelName = 'presence-' + channel;
+    const channelId = user.app_id + ':' + channelName
 
-    if (!rooms[room]) {
-        rooms[room] = {
+    channel = await channels.get(channelId)
+ 
+    if (!channel) {
+        // log new channel
+        channel = {
+            name: channelName,
             presence: []
         }
     }
 
     // 加入 presence
     const clientInfo = message
-    delete clientInfo.room
-    clientInfo.socket_id = socket.id
+    const exist = channel.presence.find(i => i.id === clientInfo.id);
+    if (!exist) {
+        clientInfo.socket_id = socket.id
+        channel.presence.push(clientInfo)
+        channels.put(channelId, channel);
+    }
 
-    rooms[room].presence.push(clientInfo)
+    socket.join(channelId);
+    socket.emit(events.JOIN_SUCCUSS, channel);
 
-    socket.emit(events.JOIN_SUCCUSS, { room: room, presence: rooms[room].presence });
-    socket.in(room).emit(events.MEMBER_JOINED, clientInfo);
+    if (!exist) {
+        socket.in(channelId).emit(events.MEMBER_JOINED, clientInfo);
+    }
 }
 
 function leave({socket, name, message}) {

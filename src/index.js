@@ -4,9 +4,6 @@ require('dotenv').config();
 const path = require('path');
 global.appRoot = path.resolve(__dirname);
 const config = require('./configs');
-const { createLogger } = require("./utils/logger");
-const logger = createLogger("web");
-const systemLogger = createLogger('system');
 
 const express = require("express");
 const { createServer } = require("http");

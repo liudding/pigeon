@@ -14,8 +14,12 @@ module.exports = class Store {
         return await this.data.set(this.key(key), value);
     }
 
+    async put(key, value) {
+        return await this.data.set(this.key(key), value);
+    }
+
     async del(key) {
-        return await this.data.del(this.key(key));
+        return await this.data.delete(this.key(key));
     }
 
     of(prefix) {

@@ -3,6 +3,7 @@
 module.exports = [{
     "id": "638c81a69633",
     "name": "Niubi App",
+    "secret": "",
     "webhooks": {
         "presence": "https://ichaoban.com/ppt/presence",
         "event": "https://ichaoban.com/ppt/event",

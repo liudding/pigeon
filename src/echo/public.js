@@ -1,25 +1,11 @@
-const { rooms } = require('../store')
+const { channels, users } = require('../store')
 const { events } = require('../sys_events')
 
-function join({ socket, channel, message }) {
-    const room = channel
-    socket.join(room);
-    roomId = room;
-
-    if (!rooms[room]) {
-        rooms[room] = {
-            presence: []
-        }
-    }
-
-    // 加入 presence
-    const clientInfo = message
-    delete clientInfo.room
-    clientInfo.socket_id = socket.id
-
-    rooms[room].presence.push(clientInfo)
-
-    socket.emit(events.JOIN_SUCCUSS, { room: room, presence: rooms[room].clients });
+async function join({ socket, channel, message, user }) {
+    channel = 'public-' + channel;
+    const channelId = user.app_id + ':' + channel;
+    socket.join(channelId);
+    socket.emit(events.JOIN_SUCCUSS, '');
 }
 
 function message(socket, name, message) {

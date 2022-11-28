@@ -1,14 +1,5 @@
 const config = require('./configs');
 
-const handlers = {}
-
-
-
-function on(event, handler) {
-    handlers[event] = handler;
-}
-
-
 function isSystemEvent(event) {
     for (const key in events) {
         if (events[key] === event) {
@@ -29,6 +20,7 @@ const events = {
     JOIN_ERROR: config.sysEventPrefix + 'join_error',
     
     MEMBER_JOINED: config.sysEventPrefix + 'member_joined',
+    MEMBER_LEFT: config.sysEventPrefix + 'member_left'
 }
 
 
