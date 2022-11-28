@@ -10,8 +10,6 @@ module.exports = {
     appName: 'chaosocket',
     sysEventPrefix: '',
 
-    jwt_secret: '',
-
 
     logDir: path.join(global.appRoot, '../logs'),
 

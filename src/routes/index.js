@@ -14,8 +14,8 @@ router.get('/status', function(req, res) {
     res.send('i am fine')
 })
 
-router.post('/publish/:room/:event/', function (req, res, next) {
-    getWebSocket().to(req.params.room).boardcast.emit({ event: params.event, data: req.body });
+router.post('/publish/:channel/:event/', function (req, res, next) {
+    getWebSocket().to(req.params.channel).boardcast.emit({ event: params.event, data: req.body });
 
     return res.send({ code: 200, msg: '发送成功' });
 });
