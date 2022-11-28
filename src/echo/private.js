@@ -13,6 +13,25 @@ async function join({socket, channel, message, user}) {
 }
 
 
+function broadcast(socket, channel, event, message, user) {
+    channel = 'private-' + channel;
+    const channelId = user.app_id + ':' + channel;
+
+    socket.to(channelId).emit(event, message)
+}
+
+async function whisper({ socket, name, to, event, message, io}) {
+    channel = 'private-' + channel;
+    const channelId = user.app_id + ':' + channel;
+
+    // const channel = await channels.get(channelId)
+    
+    io.sockets.socket(to).emit(event, message);
+
+}
+
 module.exports = {
-    join
+    join,
+    broadcast,
+    whisper
 }

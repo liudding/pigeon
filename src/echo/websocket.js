@@ -104,7 +104,7 @@ function handleEvents(io) {
             const message = packet.data[1];
 
             const {route, params } = router.dispatch(packet.data[0])
-            return route.handler({socket, channel: params.name, to: params.to, message, user})
+            return route.handler({socket, channel: params.name, event: params.event, to: params.to, message, user, io})
         });
 
     });
