@@ -1,31 +1,35 @@
-const { channels, users } = require('../store')
+const { channels } = require('../store')
 const { events } = require('../sys_events')
 
 async function join({socket, channel, message, user}) {
-    const channelName = 'presence-' + channel;
-    const channelId = user.app_id + ':' + channelName
+    if (channel.private) {
+        if (!user || !user.authenticated) {
+            return socket.emit(events.JOIN_ERROR, 'Unauthenticated');
+        }
+    }
 
-    channel = await channels.get(channelId)
+    const channelId = user.app_id + ':' + channel.name
+    model = await channels.get(channelId)
  
-    if (!channel) {
+    if (!model) {
         // log new channel
-        channel = {
-            name: channelName,
+        model = {
+            name: channel.name,
             presence: []
         }
     }
 
     // 加入 presence
     const clientInfo = message
-    const exist = channel.presence.find(i => i.id === clientInfo.id);
+    const exist = model.presence.find(i => i.id === clientInfo.id);
     if (!exist) {
         clientInfo.socket_id = socket.id
-        channel.presence.push(clientInfo)
-        channels.put(channelId, channel);
+        model.presence.push(clientInfo)
+        channels.put(channelId, model);
     }
 
     socket.join(channelId);
-    socket.emit(events.JOIN_SUCCUSS, channel);
+    socket.emit(events.JOIN_SUCCUSS, model);
 
     if (!exist) {
         socket.in(channelId).emit(events.MEMBER_JOINED, clientInfo);

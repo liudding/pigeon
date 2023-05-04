@@ -10,6 +10,7 @@
 * public channels
 * private channels
 * presence channels
+* state channels
 
 
 <channel>:join, name

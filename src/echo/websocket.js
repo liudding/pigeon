@@ -7,8 +7,7 @@ const ratelimit = require("../middleware/ratelimit");
 const { events } = require("../sys_events");
 const config = require('../configs');
 const systemLogger = require('../utils/logger').createLogger('system');
-const PublicChannel = require('./public')
-const PrivateChannel = require('./private')
+const Channel = require('./channel')
 const PresenceChannel = require('./presence')
 const router = require('./router')()
 const { users, channels } = require('../store')
@@ -46,11 +45,10 @@ function registerRoutes() {
 
     router.add('presence-:name/join', PresenceChannel.join)
     
-    router.add('public-:name/join', PublicChannel.join)
-    router.add('public-:name/broadcast/:event', PublicChannel.broadcast)
-    router.add('public-:name/whisper/:event', PublicChannel.whisper)
-
-    router.add('private-:name/:join', PrivateChannel.join)
+    router.add(':name/join', Channel.join)
+    router.add(':name/leave', Channel.leave)
+    router.add(':name/broadcast/:event', Channel.broadcast)
+    router.add(':name/whisper/:event', Channel.whisper)
 }
 
 
@@ -104,7 +102,16 @@ function handleEvents(io) {
             const message = packet.data[1];
 
             const {route, params } = router.dispatch(packet.data[0])
-            return route.handler({socket, channel: params.name, event: params.event, to: params.to, message, user, io})
+
+            const channel = {
+                name: params.name,
+                private: params.name.indexOf('private-') >= 0,
+                public: params.name.indexOf('public-') >= 0,
+                presence: params.name.indexOf('presence-') >= 0,
+                stateful: params.name.indexOf('state-') >= 0
+            }
+
+            return route.handler({socket, channel, event: params.event, to: params.to, message, user, io})
         });
 
     });
